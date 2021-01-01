@@ -3,6 +3,7 @@ package beer.adviser;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -16,28 +17,41 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //array unutar kojeg smo spremili elemente spinnera
-        String[] arraySpinner = new String[]{"light","amber","brown","dark"};
-        //stvorili spinner objekt od XML elementa
         Spinner spinner = findViewById(R.id.spinner);
+        Button button = findViewById(R.id.find_beer);
+        TextView textView = findViewById(R.id.brands);
 
-        //adapter objekt koji nam sluzi za spremanje informacija kako cemo prikazati
-        //elemente unutar spinnera i koje podatke cemo prikazati u spinner-u
+        String[] arraySpinner = new String[]{"light","amber","brown","dark"};
+        String[] versionsOfBeer = new String[]{"Ozujsko","Karlovacko","Pan","Osjecko"};
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_list_item_1,arraySpinner);
-
-        //ovako govorimo adapteru kako ce izgledati drop down lista kao argument
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
-
-        //ovdje upogonjujemo taj adapter unutar spinnera
         spinner.setAdapter(arrayAdapter);
 
-        Button button = findViewById(R.id.find_beer);
-
-        button.setOnClickListener(new View.OnClickListener() {
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                TextView textView = findViewById(R.id.brands);
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String text = spinner.getSelectedItem().toString();
+
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (text == arraySpinner[0]){
+                            textView.setText(versionsOfBeer[0]);
+                        }else if (text == arraySpinner[1]){
+                            textView.setText(versionsOfBeer[1]);
+                        }else if (text == arraySpinner[2]){
+                            textView.setText(versionsOfBeer[2]);
+                        }else if (text == arraySpinner[3]){
+                            textView.setText(versionsOfBeer[3]);
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 
