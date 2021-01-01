@@ -2,10 +2,14 @@ package beer.adviser;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,5 +31,15 @@ public class MainActivity extends AppCompatActivity {
 
         //ovdje upogonjujemo taj adapter unutar spinnera
         spinner.setAdapter(arrayAdapter);
+
+        Button button = findViewById(R.id.find_beer);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView textView = findViewById(R.id.brands);
+            }
+        });
+
     }
 }
