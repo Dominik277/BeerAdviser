@@ -5,9 +5,11 @@ import android.provider.SyncStateContract;
 
 import androidx.room.Database;
 import androidx.room.Room;
+import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
 @Database(entities = {Note.class},version = 1)
-public abstract class Notedatabase {
+public abstract class Notedatabase extends RoomDatabase {
 
     public abstract NoteDao getNoteDao();
 
@@ -23,7 +25,7 @@ public abstract class Notedatabase {
     private static Notedatabase buildDatabaseInstance(Context context){
         return Room.databaseBuilder(context,
                 Notedatabase.class,
-                SyncStateContract.Constants.DB_NAME)
+                Constants.DB_NAME)
                 .allowMainThreadQueries()
                 .build();
     }
