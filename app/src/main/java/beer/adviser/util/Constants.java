@@ -1,4 +1,4 @@
-package beer.adviser;
+package beer.adviser.util;
 
 public class Constants {
 

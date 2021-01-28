@@ -5,7 +5,6 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import beer.adviser.Constants;
 
 @Database(entities = {Note.class},version = 1)
 public abstract class Notedatabase extends RoomDatabase {
