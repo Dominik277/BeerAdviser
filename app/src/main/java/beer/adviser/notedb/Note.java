@@ -1,4 +1,4 @@
-package beer.adviser;
+package beer.adviser.notedb;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

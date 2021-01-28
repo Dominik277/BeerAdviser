@@ -1,6 +1,4 @@
-package beer.adviser;
-
-import android.provider.SyncStateContract;
+package beer.adviser.notedb;
 
 import java.util.List;
 

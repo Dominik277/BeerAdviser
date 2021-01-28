@@ -1,12 +1,11 @@
-package beer.adviser;
+package beer.adviser.notedb;
 
 import android.content.Context;
-import android.provider.SyncStateContract;
 
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.room.TypeConverters;
+import beer.adviser.Constants;
 
 @Database(entities = {Note.class},version = 1)
 public abstract class Notedatabase extends RoomDatabase {
