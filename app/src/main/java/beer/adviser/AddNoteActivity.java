@@ -5,12 +5,16 @@ import beer.adviser.notedb.Note;
 import beer.adviser.notedb.Notedatabase;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.lang.ref.WeakReference;
 
 public class AddNoteActivity extends AppCompatActivity {
 
@@ -58,6 +62,35 @@ public class AddNoteActivity extends AppCompatActivity {
     private void setResult(Note note,int flag){
         setResult(flag,new Intent().putExtra("note", (Parcelable) note));
         finish();
+    }
+
+    private static class InsertTask extends AsyncTask<Void,Void,Boolean>{
+
+        private WeakReference<AddNoteActivity> activityReference;
+        private Note note;
+
+        InsertTask(AddNoteActivity context,Note note){
+            activityReference = new WeakReference<>(context);
+            this.note = note;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... objs) {
+            long j = activityReference.get().noteDatabase.getNoteDao().insertNote(note);
+            note.setNote_id(j);
+            Log.e("ID","doInBackground: " + j);
+            return true;
+
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean bool) {
+            if (bool){
+                activityReference.get().setResult(note,1);
+                activityReference.get().finish();
+            }
+        }
     }
 
 }
