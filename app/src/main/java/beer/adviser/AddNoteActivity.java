@@ -1,6 +1,8 @@
 package beer.adviser;
 
 import androidx.appcompat.app.AppCompatActivity;
+import beer.adviser.notedb.Note;
+import beer.adviser.notedb.Notedatabase;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ public class AddNoteActivity extends AppCompatActivity {
     private Button button;
     private Notedatabase noteDatabase;
     private Note note;
+    private boolean update;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +31,26 @@ public class AddNoteActivity extends AppCompatActivity {
 
         noteDatabase = Notedatabase.getInstance(AddNoteActivity.this);
 
+        if ((note = (Note)getIntent().getSerializableExtra("note")) !=null){
+            getSupportActionBar().setTitle("Update Note");
+            update = true;
+            button.setText("Update");
+            et_title.setText(note.getTitle());
+            et_content.setText(note.getContent());
+        }
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                note = new Note(et_content.getText().toString(),
-                                et_title.getText().toString());
-                new InsertTask(AddNoteActivity.this,note).execute();
+                if (update){
+                    note.setContent(et_content.getText().toString());
+                    note.setTitle(et_title.getText().toString());
+                    noteDatabase.getNoteDao().updateNote(note);
+                    setResult(note,2);
+                }else {
+                    note = new Note(et_content.getText().toString(),et_title.getText().toString());
+                    new InsertTask(AddNoteActivity.this,note).execute();
+                }
             }
         });
     }
