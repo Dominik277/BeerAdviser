@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -48,14 +49,24 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.BeanHolder> 
 
     public class BeanHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
+        TextView textViewContent;
+        TextView textViewTitle;
+
         public BeanHolder(@NonNull View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
+            textViewContent = itemView.findViewById(R.id.item_text);
+            textViewTitle = itemView.findViewById(R.id.tv_title);
         }
 
         @Override
         public void onClick(View v) {
-
+            onNoteItemClick.onNoteClick(getAdapterPosition());
         }
     }
+
+        public interface OnNoteItemClick{
+            void onNoteClick(int pos);
+        }
 
 }
